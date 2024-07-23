@@ -7,7 +7,8 @@ namespace ERPServer.Domain.Entities
     {
         public Guid CustomerId { get; set; }
         public Customer? Customer { get; set; }
-        public string OrderNumber { get; set; } = string.Empty;
+        public int OrderNumberYear { get; set; }
+        public int OrderNumber { get; set; }
         public DateTime Date { get; set; }
         public DateTime DeliveryDate { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.Pending;

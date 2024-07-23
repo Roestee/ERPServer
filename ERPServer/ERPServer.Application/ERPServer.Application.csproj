@@ -20,4 +20,18 @@
     <ProjectReference Include="..\ERPServer.Domain\ERPServer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Features\Orders\" />
+    <None Remove="Features\Orders\GetAllOrders\" />
+    <None Remove="Features\Orders\CreateOrder\" />
+    <None Remove="Features\Orders\DeleteOrder\" />
+    <None Remove="Features\Orders\UpdateOrder\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\Orders\" />
+    <Folder Include="Features\Orders\GetAllOrders\" />
+    <Folder Include="Features\Orders\CreateOrder\" />
+    <Folder Include="Features\Orders\DeleteOrder\" />
+    <Folder Include="Features\Orders\UpdateOrder\" />
+  </ItemGroup>
 </Project>

@@ -28,10 +28,7 @@
     <None Remove="Features\Orders\UpdateOrder\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\Orders\" />
-    <Folder Include="Features\Orders\GetAllOrders\" />
+    <Folder Include="Features\Orders\GetAllOrder\" />
     <Folder Include="Features\Orders\CreateOrder\" />
-    <Folder Include="Features\Orders\DeleteOrder\" />
-    <Folder Include="Features\Orders\UpdateOrder\" />
   </ItemGroup>
 </Project>

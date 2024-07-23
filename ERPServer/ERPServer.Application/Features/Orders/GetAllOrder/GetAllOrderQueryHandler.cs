@@ -4,20 +4,14 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TS.Result;
 
-namespace ERPServer.Application.Features.Orders.GetAllOrders
+namespace ERPServer.Application.Features.Orders.GetAllOrder
 {
-    internal sealed class GetAllOrderQueryHandler : IRequestHandler<GetAllOrderQuery, Result<List<Order>>>
+    internal sealed class GetAllOrderQueryHandler(
+        IOrderRepository orderRepository) : IRequestHandler<GetAllOrderQuery, Result<List<Order>>>
     {
-        private readonly IOrderRepository _orderRepository;
-
-        public GetAllOrderQueryHandler(IOrderRepository orderRepository)
-        {
-            _orderRepository = orderRepository;
-        }
-
         public async Task<Result<List<Order>>> Handle(GetAllOrderQuery request, CancellationToken cancellationToken)
         {
-            var orders = await _orderRepository.GetAll()
+            var orders = await orderRepository.GetAll()
                 .Include(p => p.Customer)
                 .Include(p => p.Details!)
                 .ThenInclude(p => p.Product)

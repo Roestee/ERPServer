@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ERPServer.Domain.Entities;
 using ERPServer.Domain.Repositories;
 using GenericRepository;
 using MediatR;
@@ -23,8 +24,18 @@ namespace ERPServer.Application.Features.Orders.UpdateOrder
                 return Result<string>.Failure("Sipariş bulunamadı!");
 
             orderDetailRepository.DeleteRange(order.Details);
+            var newDetails = request.Details.Select(x=> new OrderDetail
+            {
+                OrderId = order.Id,
+                UnitPrice = x.UnitPrice,
+                Quantity = x.Quantity,  
+                ProductId = x.ProductId,
+            }).ToList();
+
+            await orderDetailRepository.AddRangeAsync(newDetails, cancellationToken);
 
             mapper.Map(request, order);
+            orderRepository.Update(order);
             await unitOfWork.SaveChangesAsync(cancellationToken);
             return "Sipariş başarıyla güncellendi.";
         }

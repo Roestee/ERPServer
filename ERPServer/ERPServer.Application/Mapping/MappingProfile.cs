@@ -4,6 +4,7 @@ using ERPServer.Application.Features.Customers.UpdateCustomer;
 using ERPServer.Application.Features.Depots.CreateDepot;
 using ERPServer.Application.Features.Depots.UpdateDepot;
 using ERPServer.Application.Features.Orders.CreateOrder;
+using ERPServer.Application.Features.Orders.UpdateOrder;
 using ERPServer.Application.Features.Products.CreateProduct;
 using ERPServer.Application.Features.Products.UpdateProduct;
 using ERPServer.Application.Features.RecipeDetails.CreateRecipeDetail;
@@ -41,6 +42,9 @@ namespace ERPServer.Application.Mapping
                     Quantity = x.Quantity,
                     ProductId = x.ProductId
                 }).ToList()));
+
+            CreateMap<UpdateOrderCommand, Order>()
+                .ForMember(member => member.Details, opt => opt.Ignore());
         }
     }
 }

@@ -15,6 +15,7 @@ namespace ERPServer.Infrastructure.Context
         public DbSet<RecipeDetail> RecipeDetails { get; set; }
         public DbSet<Order> Orders{ get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<StockMovement> StockMovements { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {

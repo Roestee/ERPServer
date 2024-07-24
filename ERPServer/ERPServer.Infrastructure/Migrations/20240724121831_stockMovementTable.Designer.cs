@@ -4,6 +4,7 @@ using ERPServer.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERPServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240724121831_stockMovementTable")]
+    partial class stockMovementTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,17 +276,14 @@ namespace ERPServer.Infrastructure.Migrations
                     b.Property<Guid>("DepotId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("NumberOfEntries")
-                        .HasColumnType("decimal(7,2)");
-
-                    b.Property<decimal>("NumberOfOutputs")
-                        .HasColumnType("decimal(7,2)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("StockChangeAmount")
+                        .HasColumnType("decimal(7,2)");
 
                     b.HasKey("Id");
 

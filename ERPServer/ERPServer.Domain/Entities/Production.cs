@@ -9,6 +9,6 @@ namespace ERPServer.Domain.Entities
         public Product? Product { get; set; }
         public Depot? Depot { get; set; }
         public decimal Quantity { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

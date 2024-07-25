@@ -13,6 +13,8 @@ namespace ERPServer.Application.Features.Productions.GetAllProduction
         {
             var productions = await productionRepository
                 .GetAll()
+                .Include(x=>x.Product)
+                .Include(x=>x.Depot)
                 .OrderByDescending(x=>x.CreatedAt)
                 .Include(x=>x.Product)
                 .ToListAsync(cancellationToken);

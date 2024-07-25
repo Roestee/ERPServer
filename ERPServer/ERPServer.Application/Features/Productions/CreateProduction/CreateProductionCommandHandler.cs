@@ -41,7 +41,7 @@ namespace ERPServer.Application.Features.Productions.CreateProduction
 
                     var stock = movements.Sum(x => x.NumberOfEntries) - movements.Sum(x => x.NumberOfOutputs);
                     if (item.Quantity > stock)
-                        return Result<string>.Failure(item.Product!.Name + "ürününden üretim için yeterli miktarda yok. Eksik miktar: " + (item.Quantity - stock));
+                        return Result<string>.Failure(item.Product!.Name + " ürününden üretim için yeterli miktarda yok. Eksik miktar: " + (item.Quantity - stock));
 
                     foreach (var depotId in depotIds)
                     {
@@ -52,19 +52,20 @@ namespace ERPServer.Application.Features.Productions.CreateProduction
                             .Where(x=>x.DepotId == depotId)
                             .Sum(x => x.NumberOfEntries - x.NumberOfOutputs);
 
-                        var totalPrice = movements
+                        var totalAmount = movements
                             .Where(x => x.DepotId == depotId && x.NumberOfEntries > 0)
-                            .Sum(x => x.Price);
+                            .Sum(x => x.Price * x.NumberOfEntries);
 
                         var totalEntriesQuantity = movements
                         .Where(x => x.DepotId == depotId && x.NumberOfEntries > 0)
                         .Sum(x => x.NumberOfEntries);
 
-                        var price = totalPrice / totalEntriesQuantity;
+                        var price = totalAmount / totalEntriesQuantity;
 
                         var stockMovement = new StockMovement
                         {
-                            ProductId = production.Id,
+                            ProductionId = production.Id,
+                            ProductId = item.ProductId,
                             DepotId = depotId,
                             Price = price,
                         };

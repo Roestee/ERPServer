@@ -4,6 +4,7 @@ using ERPServer.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERPServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240724183253_invoiceTableUpdate3")]
+    partial class invoiceTableUpdate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -282,33 +285,6 @@ namespace ERPServer.Infrastructure.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ERPServer.Domain.Entities.Production", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("DepotId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(7,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepotId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Productions");
-                });
-
             modelBuilder.Entity("ERPServer.Domain.Entities.Recipe", b =>
                 {
                     b.Property<Guid>("Id")
@@ -373,16 +349,11 @@ namespace ERPServer.Infrastructure.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ProductionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductionId");
 
                     b.ToTable("StockMovements");
                 });
@@ -471,25 +442,6 @@ namespace ERPServer.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ERPServer.Domain.Entities.Production", b =>
-                {
-                    b.HasOne("ERPServer.Domain.Entities.Depot", "Depot")
-                        .WithMany()
-                        .HasForeignKey("DepotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ERPServer.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Depot");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ERPServer.Domain.Entities.Recipe", b =>
                 {
                     b.HasOne("ERPServer.Domain.Entities.Product", "Product")
@@ -530,15 +482,9 @@ namespace ERPServer.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ERPServer.Domain.Entities.Production", "Production")
-                        .WithMany()
-                        .HasForeignKey("ProductionId");
-
                     b.Navigation("Invoice");
 
                     b.Navigation("Product");
-
-                    b.Navigation("Production");
                 });
 
             modelBuilder.Entity("ERPServer.Domain.Entities.Invoice", b =>
